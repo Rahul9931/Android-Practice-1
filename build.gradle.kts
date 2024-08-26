@@ -3,4 +3,7 @@ plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     id("androidx.navigation.safeargs.kotlin") version "2.5.1" apply false
+    alias(libs.plugins.apollo) apply false
+    alias(libs.plugins.kotlinx.serialization) apply false
+    alias(libs.plugins.dagger) apply  false
 }

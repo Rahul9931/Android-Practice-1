@@ -1,6 +1,12 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.apollo)
+
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.dagger)
+    id("kotlin-parcelize")
+    kotlin("kapt")
 }
 
 android {
@@ -33,8 +39,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
+    }
+    apollo {
+        service("first_time") {
+            packageName.set("src.main.graphql")
+            introspection {
+                endpointUrl = "https://countries.trevorblades.com/"
+                schemaFile.set(file("src/main/graphql/com/example/android_practice_1/schema.sdl"))
+            }
+        }
     }
 }
 
@@ -52,4 +67,17 @@ dependencies {
     // Navigation Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    // apollo
+    implementation(libs.apollo.runtime)
+
+    // dagger
+    implementation(libs.dagger.hilt)
+    implementation(libs.hilt.compose.navigation)
+    kapt(libs.dagger.kapt)
+
+    // navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization)
+
 }
