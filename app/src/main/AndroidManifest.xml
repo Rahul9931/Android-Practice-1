@@ -13,28 +13,58 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Android_practice_1"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
-            android:name=".navigation_practice.NavigationMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Ui_check"
+            android:name=".pagination.activity.PagingPracticeActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
+            android:exported="true">
+
         </activity>
         <activity
-            android:name=".googlesignin.GoogleSignIn_Java"
+            android:name=".activity.PracticeActyvity"
             android:exported="true"></activity>
+        <activity
+            android:name=".navigation_practice.NavigationMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Ui_check"
+            android:exported="true" />
+        <activity
+            android:name=".googlesignin.GoogleSignIn_Java"
+            android:exported="true" />
         <activity
             android:name=".googlesignin.GoogleSignIn"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true">
+
+            <!-- Deep Link -->
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="https"
+                    android:host="papayacoders.in"/>
+            </intent-filter>
+            -->
+        </activity>
     </application>
 
 </manifest>

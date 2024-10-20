@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android_practice_1.adapter.CustomAdapter
 import com.example.android_practice_1.databinding.ActivityUiCheckBinding
 
 class Ui_check : AppCompatActivity() {

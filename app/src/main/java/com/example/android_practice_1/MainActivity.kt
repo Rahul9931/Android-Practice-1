@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val oKHttp = OkHttpClient.Builder().build()
+        /*val oKHttp = OkHttpClient.Builder().build()
         val apolloClient = ApolloClient.Builder()
             .serverUrl("https://countries.trevorblades.com/")
             .okHttpClient(oKHttp)
-            .build()
+            .build()*/
 
     }
 }

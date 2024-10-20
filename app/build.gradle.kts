@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.apollo)
-
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.dagger)
     id("kotlin-parcelize")
@@ -40,9 +39,10 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
-    apollo {
+    /*apollo {
         service("first_time") {
             packageName.set("src.main.graphql")
             introspection {
@@ -50,7 +50,7 @@ android {
                 schemaFile.set(file("src/main/graphql/com/example/android_practice_1/schema.sdl"))
             }
         }
-    }
+    }*/
 }
 
 dependencies {
@@ -63,7 +63,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.viewmodel)
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    // retrofit converter
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
     // Navigation Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
@@ -79,5 +89,8 @@ dependencies {
     // navigation
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization)
+
+    // paging
+    implementation("androidx.paging:paging-runtime:3.3.2")
 
 }
