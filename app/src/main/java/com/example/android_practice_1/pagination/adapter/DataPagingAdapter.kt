@@ -26,6 +26,7 @@ class DataPagingAdapter : PagingDataAdapter<Article, DataPagingAdapter.DataViewH
     class DataViewHolder(private val binding: CustomModel2Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dataItem: Article) {
             binding.txtNum.text = dataItem.title
+            binding.executePendingBindings()
         }
     }
 

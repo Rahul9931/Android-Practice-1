@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_practice_1.R
@@ -19,6 +20,8 @@ import com.example.android_practice_1.pagination.adapter.DataPagingAdapter
 import com.example.android_practice_1.pagination.adapter.NewsAdapter
 import com.example.android_practice_1.pagination.networking.RetrofitHelper
 import com.example.android_practice_1.pagination.paging_components.DataPagingSource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -50,16 +53,32 @@ class PagingPracticeActivity : AppCompatActivity() {
             //loadArticles(1)
             setDataPagingAdapter()
 
-            // Set up the paging data
-            val apiService = RetrofitHelper.apiService
-            Log.d("check_apiservice","apiservice")
-            lifecycleScope.launch {
-                Log.d("MainActivity", "Starting data loading...")
-                Pager(PagingConfig(pageSize = 10)) {
-                    DataPagingSource(apiService)
-                }.flow.collectLatest {
-                    Log.d("check_it","${it}")
-                    newsAdapter2.submitData(it)
+//            // Set up the paging data
+//            val apiService = RetrofitHelper.apiService
+//            Log.d("check_apiservice","apiservice")
+//            lifecycleScope.launch {
+//                Log.d("MainActivity", "Starting data loading...")
+//                Pager(PagingConfig(pageSize = 10)) {
+//                    DataPagingSource(apiService)
+//                }.flow.collectLatest {
+//                    Log.d("check_it","${it}")
+//                    newsAdapter2.submitData(it)
+//                }
+//            }
+
+            // Initialize the Pager
+            CoroutineScope(Dispatchers.IO).launch {
+                val pager = Pager(
+                    config = PagingConfig(
+                        pageSize = 10,
+                        enablePlaceholders = false
+                    ),
+                    pagingSourceFactory = { DataPagingSource(RetrofitHelper.apiService) }
+                )
+
+                // Submit data to the adapter
+                pager.flow.collectLatest { pagingData: PagingData<Article> ->
+                    newsAdapter2.submitData(pagingData)
                 }
             }
         }

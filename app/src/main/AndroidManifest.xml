@@ -15,9 +15,8 @@
         android:theme="@style/Theme.Android_practice_1"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
-            android:name=".pagination.activity.PagingPracticeActivity"
+            android:name=".helper.HelperActivity"
             android:exported="true">
 
             <intent-filter>
@@ -25,17 +24,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
-            android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
+            android:name=".pagination.activity.PagingPracticeActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".activity.PracticeActyvity"
+            android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
             android:exported="true"></activity>
+        <activity
+            android:name=".activity.PracticeActyvity"
+            android:exported="true" />
         <activity
             android:name=".navigation_practice.NavigationMainActivity"
             android:exported="false" />

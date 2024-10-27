@@ -7,9 +7,9 @@ import retrofit2.http.Query
 
 interface NewsApiService {
     @GET("top-headlines?country=us&apiKey=29337f0874714e63b8c7e29abe9c28a7")
-    suspend fun getNews(
+    fun getNews(
         @Query("page") page:Int,
         @Query("pageSize") pageSize:Int
 
-    ): News
+    ): Call<News>
 }
