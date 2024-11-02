@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".helper.HelperActivity"
+            android:name=".push_notifications.activity.PushNotificationPracticeActivity"
             android:exported="true">
 
             <intent-filter>
@@ -26,13 +27,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".pagination.activity.PagingPracticeActivity"
+            android:name=".helper.HelperActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
+            android:name=".pagination.activity.PagingPracticeActivity"
             android:exported="true"></activity>
+        <activity
+            android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
+            android:exported="true" />
         <activity
             android:name=".activity.PracticeActyvity"
             android:exported="true" />
@@ -52,6 +56,7 @@
             android:name=".MainActivity"
             android:exported="true">
 
+
             <!-- Deep Link -->
             <!--
             <intent-filter>
@@ -65,6 +70,15 @@
             </intent-filter>
             -->
         </activity>
+
+<!--        Services-->
+        <service
+            android:name=".push_notifications.service.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
