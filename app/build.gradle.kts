@@ -95,4 +95,7 @@ dependencies {
     // paging
     implementation("androidx.paging:paging-runtime:3.3.2")
 
+    // crop image
+    implementation("com.vanniktech:android-image-cropper:4.6.0")
+
 }

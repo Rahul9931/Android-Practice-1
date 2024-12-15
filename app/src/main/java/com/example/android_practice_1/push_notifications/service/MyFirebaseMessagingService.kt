@@ -2,6 +2,7 @@ package com.example.android_practice_1.push_notifications.service
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -13,7 +14,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-
+        Log.d("check_FCM_response","FCM response")
+        Log.d("check_msg","${message}")
+        Log.d("check_data","${message.data}")
+        Log.d("check_notification","${message.notification}")
         getFirebaseMessage(message.notification?.title, message.notification?.body)
     }
 

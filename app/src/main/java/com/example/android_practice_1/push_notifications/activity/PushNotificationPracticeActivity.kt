@@ -48,7 +48,12 @@ class PushNotificationPracticeActivity : AppCompatActivity() {
                 Log.d("check_firebase_msg", msg)
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
-
+        Log.d("check_product_id","${intent.hasExtra("product_id")}")
+        if (intent.hasExtra("product_id")){
+            for (key in intent.extras!!.keySet()){
+                Log.d("check_noti_data","key = $key value = ${intent.extras!!.getString(key)}")
+            }
+        }
 
     }
 
