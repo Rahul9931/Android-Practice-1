@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.Crop_Image_Practice"
+            android:name=".ottu_payment_sdk.activity.CheckoutActivity"
             android:exported="true">
 
             <intent-filter>
@@ -27,16 +27,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".scheduling.activity.TwoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".scheduling.activity.OneActivity"
+            android:name=".activity.Crop_Image_Practice"
             android:exported="true">
 
         </activity>
         <activity
+            android:name=".scheduling.activity.TwoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".scheduling.activity.OneActivity"
+            android:exported="true" />
+        <activity
             android:name=".push_notifications.activity.PushNotificationPracticeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".helper.HelperActivity"
             android:exported="true" />

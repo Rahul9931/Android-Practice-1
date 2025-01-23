@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.android_practice_1"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -97,5 +97,8 @@ dependencies {
 
     // crop image
     implementation("com.vanniktech:android-image-cropper:4.6.0")
+
+    // ottu sdk
+    implementation("com.github.ottuco:ottu-android-checkout:1.0.6")
 
 }
