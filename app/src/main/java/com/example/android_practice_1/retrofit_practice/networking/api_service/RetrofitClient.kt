@@ -1,11 +1,16 @@
 package com.example.android_practice_1.retrofit_practice.networking.api_service
 
-import com.example.android_practice_1.constants.ApplicationConstants
-import com.google.gson.Gson
+import android.os.Build
+import android.util.Log
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
@@ -35,12 +40,13 @@ object RetrofitClient {
                 .readTimeout(2, TimeUnit.MINUTES)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(AuthTokenInterceptor(token)) // Token interceptor
+                .addInterceptor(ResponseLoggingInterceptor()) // Response logging interceptor
                 .build()
 
             retrofit = Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com/")
                 .addConverterFactory(GsonConverterFactory.create())
-                //.client(okHttpClient)
+                .client(okHttpClient)
                 .build()
         }
         return retrofit!!
@@ -58,4 +64,110 @@ object RetrofitClient {
         }
     }
 
+    // Interceptor to log API URL, request, and response based on status code
+//    private class ResponseLoggingInterceptor : Interceptor {
+//        @Throws(IOException::class)
+//        override fun intercept(chain: Interceptor.Chain): Response {
+//            val request = chain.request()
+//            val response = chain.proceed(request)
+//
+//            // ✅ Use `peekBody()` instead of `.string()` to avoid consuming response
+//            val responseBodyString = response.peekBody(Long.MAX_VALUE).string()
+//            Log.d("check_RetrofitClient", "Response body --> $responseBodyString")
+//
+//            // ✅ Parse JSON safely
+//            val jsonBody = try {
+//                JSONObject(responseBodyString)
+//            } catch (e: Exception) {
+//                JSONObject()  // Return an empty JSON object in case of parsing failure
+//            }
+//            Log.d("check_RetrofitClient", "Response body json --> $jsonBody")
+//            Log.d("check_RetrofitClient"," title --> ${jsonBody.get("title")}")
+//
+//            // Return the original response to avoid breaking the chain
+//            return response
+//        }
+//    }
+
+    private class ResponseLoggingInterceptor : Interceptor {
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val response = chain.proceed(request)
+
+            // Use `peekBody()` to avoid consuming the response body
+            val responseBodyString = response.peekBody(Long.MAX_VALUE).string()
+            Log.d("check_RetrofitClient", "Response body --> $responseBodyString")
+
+            // Parse JSON safely
+            val jsonBody = try {
+                JSONObject(responseBodyString)
+            } catch (e: Exception) {
+                JSONObject()  // Return an empty JSON object in case of parsing failure
+            }
+            Log.d("check_RetrofitClient", "Response body json --> $jsonBody")
+            Log.d("check_RetrofitClient", "title --> ${jsonBody.optString("title")}")
+
+            // Check if the response code is not 200
+            if (response.code != 200) {
+                // Prepare the error log request body
+                val errorLogBody = JSONObject().apply {
+                    put("Error", JSONObject().apply {
+                        put("url", request.url.toString())
+                        put("error", "some error")
+                        put("status_code", response.code)
+                        put("os", "android")
+                        put("android_version", Build.VERSION.RELEASE)
+                        put("device_name", Build.MODEL)
+                    })
+                    put("type", "critical")
+                }
+
+                // Log the error log request body
+                Log.d("check_RetrofitClient", "Error log request body --> $errorLogBody")
+
+                // Make the error log API call
+                logErrorToServer(errorLogBody)
+            }
+
+            // Return the original response to avoid breaking the chain
+            return response
+        }
+
+        private fun logErrorToServer(errorLogBody: JSONObject) {
+            val logging = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY  // Logs request & response body
+            }
+
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build()
+
+            val requestBody = FormBody.Builder()
+            // Add the "Error" field as a JSON string
+                .add("Error", errorLogBody.getJSONObject("Error").toString())
+            // Add the "type" field
+                .add("type", errorLogBody.getString("type"))
+                .build()
+
+            val request = Request.Builder()
+                .url("")
+                .post(requestBody)
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.e("check_errorlog", "Failed to log error: ${e.message}")
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.use {  // Ensure response is closed properly
+                        val responseBody = response.body?.string() ?: "No response body"
+                        Log.d("check_errorlog", "Error logged successfully: $responseBody")
+                    }
+                }
+            })
+        }
+
+    }
 }

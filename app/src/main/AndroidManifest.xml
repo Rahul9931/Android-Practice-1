@@ -20,11 +20,6 @@
             android:name=".ottu_payment_sdk.activity.CheckoutActivity"
             android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.Crop_Image_Practice"
@@ -48,7 +43,15 @@
             android:exported="true" />
         <activity
             android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
-            android:exported="true" />
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".activity.PracticeActyvity"
             android:exported="true" />

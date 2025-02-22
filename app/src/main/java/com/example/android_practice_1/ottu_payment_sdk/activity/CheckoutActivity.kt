@@ -23,9 +23,14 @@ class CheckoutActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val apikey = ""
-        val sessionid = ""
-        val merchantid = ""
+//        val apikey = ""
+//        val sessionid = ""
+//        val merchantid = ""
+
+        val apikey = "9c0ef01238c8c1efc156fa0e65b342704086e929"
+        val sessionid = "79ee5c0b5a96a5cec3717d6d1407f4e9878a160c"
+        val merchantid = "sandbox.ottu.net"
+
         val btn = findViewById<Button>(R.id.btn_pay)
         btn.setOnClickListener {
             startPayment(merchantid, sessionid, apikey,"500")
