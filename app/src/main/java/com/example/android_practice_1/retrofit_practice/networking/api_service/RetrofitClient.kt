@@ -64,31 +64,6 @@ object RetrofitClient {
         }
     }
 
-    // Interceptor to log API URL, request, and response based on status code
-//    private class ResponseLoggingInterceptor : Interceptor {
-//        @Throws(IOException::class)
-//        override fun intercept(chain: Interceptor.Chain): Response {
-//            val request = chain.request()
-//            val response = chain.proceed(request)
-//
-//            // ✅ Use `peekBody()` instead of `.string()` to avoid consuming response
-//            val responseBodyString = response.peekBody(Long.MAX_VALUE).string()
-//            Log.d("check_RetrofitClient", "Response body --> $responseBodyString")
-//
-//            // ✅ Parse JSON safely
-//            val jsonBody = try {
-//                JSONObject(responseBodyString)
-//            } catch (e: Exception) {
-//                JSONObject()  // Return an empty JSON object in case of parsing failure
-//            }
-//            Log.d("check_RetrofitClient", "Response body json --> $jsonBody")
-//            Log.d("check_RetrofitClient"," title --> ${jsonBody.get("title")}")
-//
-//            // Return the original response to avoid breaking the chain
-//            return response
-//        }
-//    }
-
     private class ResponseLoggingInterceptor : Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
@@ -103,13 +78,16 @@ object RetrofitClient {
             val jsonBody = try {
                 JSONObject(responseBodyString)
             } catch (e: Exception) {
-                JSONObject()  // Return an empty JSON object in case of parsing failure
+                Log.d("check_RetrofitClient","parsing failure occur received empty jsonBody")
+                JSONObject()
+            // Return an empty JSON object in case of parsing failure
             }
             Log.d("check_RetrofitClient", "Response body json --> $jsonBody")
-            Log.d("check_RetrofitClient", "title --> ${jsonBody.optString("title")}")
+            Log.d("check_RetrofitClient", "title --> ${jsonBody.optBoolean("completed")}")
+            var successKey = jsonBody.optBoolean("completed")
 
             // Check if the response code is not 200
-            if (response.code != 200) {
+            if (response.code != 200 || successKey == false) {
                 // Prepare the error log request body
                 val errorLogBody = JSONObject().apply {
                     put("Error", JSONObject().apply {
@@ -120,7 +98,7 @@ object RetrofitClient {
                         put("android_version", Build.VERSION.RELEASE)
                         put("device_name", Build.MODEL)
                     })
-                    put("type", "critical")
+                    put("type", if (response.code != 200) "critical" else "warning")
                 }
 
                 // Log the error log request body

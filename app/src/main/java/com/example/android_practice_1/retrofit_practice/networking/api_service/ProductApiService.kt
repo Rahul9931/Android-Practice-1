@@ -1,8 +1,10 @@
 package com.example.android_practice_1.retrofit_practice.networking.api_service
 
 import com.example.android_practice_1.retrofit_practice.model.LoginResponse
+import com.example.android_practice_1.retrofit_practice.model.TodoUser
 import com.example.android_practice_1.retrofit_practice.model.User
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -23,4 +25,11 @@ interface ProductApiService {
 
     @GET("posts/1")
     fun getUser(): Call<User>
+
+    @GET("todos/1")
+    suspend fun getTodo(): Response<TodoUser>
+
+    @GET("todos/2000")
+    suspend fun getTodo4(): Response<TodoUser>
+
 }
