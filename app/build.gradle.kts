@@ -43,15 +43,15 @@ android {
         dataBinding = true
         viewBinding = true
     }
-    /*apollo {
+    apollo {
         service("first_time") {
             packageName.set("src.main.graphql")
             introspection {
                 endpointUrl = "https://countries.trevorblades.com/"
-                schemaFile.set(file("src/main/graphql/com/example/android_practice_1/schema.sdl"))
+                schemaFile.set(file("src/main/graphql/schema.sdl"))
             }
         }
-    }*/
+    }
 }
 
 dependencies {
@@ -100,5 +100,12 @@ dependencies {
 
     // ottu sdk
     implementation("com.github.ottuco:ottu-android-checkout:1.0.6")
+
+    // Map Screen
+    implementation ("com.google.android.gms:play-services-maps:19.1.0")
+    implementation ("com.google.android.libraries.places:places:4.1.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }

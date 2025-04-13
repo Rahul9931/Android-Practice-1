@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -17,15 +20,45 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ottu_payment_sdk.activity.CheckoutActivity"
+            android:name=".search_pagination.activity.ProductListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".search_pagination.activity.BeforeProductListActivity"
             android:exported="true">
 
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBrGKhKzrCpXiIFOJBytnjhXVJeREu5Vg8" />
+
+        <activity
+            android:name=".map.map_screen.MapActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
+            android:name=".map.activity.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".graphql_practice.GraphQLPracticeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ottu_payment_sdk.activity.CheckoutActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.Crop_Image_Practice"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".scheduling.activity.TwoActivity"
             android:exported="false" />
@@ -43,15 +76,7 @@
             android:exported="true" />
         <activity
             android:name=".retrofit_practice.activity.RetrofitPracticeActivity"
-            android:exported="true" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".activity.PracticeActyvity"
             android:exported="true" />
@@ -72,17 +97,18 @@
             android:exported="true">
 
             <!-- Deep Link -->
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="https"
-                    android:host="papayacoders.in"/>
-            </intent-filter>
-            -->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+
+<!--                <data-->
+<!--                    android:host="papayacoders.in"-->
+<!--                    android:scheme="https" />-->
+<!--            </intent-filter>-->
         </activity> <!-- Services -->
         <service
             android:name=".push_notifications.service.MyFirebaseMessagingService"

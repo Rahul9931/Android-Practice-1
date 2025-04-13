@@ -129,7 +129,7 @@ object RetrofitClient {
                 .build()
 
             val request = Request.Builder()
-                .url("")
+                .url("https://webtest.maqadhe.com/mobikulhttp/app/errorlog")
                 .post(requestBody)
                 .build()
 

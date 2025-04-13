@@ -3,4 +3,11 @@
     <style name="Theme.MyApp.Splash" parent="Theme.Material3.DayNight.NoActionBar">
 <!--        <item name="android:windowBackground">@android:color/holo_blue_light</item>-->
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:cursorVisible">true</item>
+    </style>
 </resources>
