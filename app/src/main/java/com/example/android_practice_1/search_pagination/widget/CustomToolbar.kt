@@ -24,10 +24,12 @@ class CustomToolbar @JvmOverloads constructor(
     private lateinit var titleTextView: TextView
     private lateinit var backButton: ImageButton
     private lateinit var searchButton: ImageButton
+    private lateinit var voiceSearchButton: ImageButton // Add this
 
     var onBackPressed: (() -> Unit)? = null
     var onSearchStateChanged: ((isSearching: Boolean) -> Unit)? = null
     var onQueryTextChanged: ((query: String) -> Unit)? = null
+    var onVoiceSearchRequested: (() -> Unit)? = null
 
     private var isSearching = false
 
@@ -37,22 +39,6 @@ class CustomToolbar @JvmOverloads constructor(
         setContentInsetsRelative(0, 0)
         setBackgroundColor(context.getColor(R.color.colorPrimary))
 
-//        searchView.maxWidth = Integer.MAX_VALUE
-//        searchView.isIconified = false
-//
-//        // Find the search edit text and customize it
-//        val searchEditText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-//        searchEditText?.let {
-//            it.setTextColor(Color.WHITE)
-//            it.setHintTextColor(Color.WHITE)
-//            it.hint = "Search products..."
-//            it.setCursorVisible(true)
-//        }
-//
-//        // Remove the search icon from the search view
-//        val searchIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
-//        searchIcon?.setImageDrawable(null)
-
         // Inflate layout
         LayoutInflater.from(context).inflate(R.layout.custom_toolbar, this, true)
 
@@ -61,6 +47,7 @@ class CustomToolbar @JvmOverloads constructor(
         titleTextView = findViewById(R.id.titleTextView)
         searchButton = findViewById(R.id.searchButton)
         searchView = findViewById(R.id.searchView)
+        voiceSearchButton = findViewById(R.id.voiceSearchButton)
 
         // Configure search view
         searchView.maxWidth = Integer.MAX_VALUE // Important for proper expansion
@@ -80,6 +67,11 @@ class CustomToolbar @JvmOverloads constructor(
 
         searchButton.setOnClickListener {
             toggleSearch()
+        }
+
+        // Set click listener for voice button
+        voiceSearchButton.setOnClickListener {
+            onVoiceSearchRequested?.invoke()
         }
 
         // Configure search view
@@ -103,13 +95,18 @@ class CustomToolbar @JvmOverloads constructor(
             titleTextView.visibility = View.GONE
             searchButton.visibility = View.GONE
             searchView.visibility = View.VISIBLE
+            voiceSearchButton.visibility = View.VISIBLE
             searchView.isIconified = false
-            searchView.requestFocus()
+            post {
+                searchView.requestFocus()
+            }
         } else {
             titleTextView.visibility = View.VISIBLE
             searchButton.visibility = View.VISIBLE
             searchView.visibility = View.GONE
+            voiceSearchButton.visibility = View.GONE
             searchView.setQuery("", false)
+            searchView.clearFocus()
         }
         onSearchStateChanged?.invoke(isSearching)
     }

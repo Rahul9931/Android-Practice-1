@@ -38,12 +38,28 @@
         android:padding="16dp"
         android:src="@drawable/search" />
 
+    <!-- Add this ImageButton right before the SearchView -->
+    <ImageButton
+        android:id="@+id/voiceSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toStartOf="@id/searchButton"
+        android:layout_alignParentEnd="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Voice search"
+        android:padding="16dp"
+        android:src="@drawable/ic_mic"
+        android:visibility="gone" />
+
+    <!-- Update your SearchView to be before the voice button -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="36dp"
+        android:layout_margin="8dp"
         android:layout_toEndOf="@id/backButton"
-        android:layout_toStartOf="@id/searchButton"
+        android:layout_toStartOf="@id/voiceSearchButton"
+        android:layout_centerVertical="true"
         android:theme="@style/SearchViewStyle"
         app:iconifiedByDefault="false"
         app:queryHint="Search products..."

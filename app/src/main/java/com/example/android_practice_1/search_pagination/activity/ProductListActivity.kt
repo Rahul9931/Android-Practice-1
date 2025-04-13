@@ -1,8 +1,13 @@
 package com.example.android_practice_1.search_pagination.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.speech.RecognizerIntent
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +32,11 @@ class ProductListActivity : AppCompatActivity() {
     private val pageSize = 10
     private val allProducts = mutableListOf<Product>()
 
+    companion object {
+        private const val REQUEST_CODE_VOICE_SEARCH = 101
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -35,12 +45,20 @@ class ProductListActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         loadingProgressBar = findViewById(R.id.loadingProgressBar)
 
+
+
         setupToolbar()
         setupRecyclerView()
         loadProducts()
+        // Clear focus from anything trying to request it after layout
+        Handler(Looper.getMainLooper()).post {
+            val rootView = findViewById<View>(android.R.id.content)
+            rootView.clearFocus()
+        }
     }
 
     private fun setupToolbar() {
+
         toolbar.setTitle("Product List")
 
         toolbar.onBackPressed = {
@@ -64,6 +82,41 @@ class ProductListActivity : AppCompatActivity() {
         toolbar.onQueryTextChanged = { query ->
             currentQuery = query
             loadProducts(reset = true)
+        }
+
+        // Add this voice search handler
+        toolbar.onVoiceSearchRequested = {
+            startVoiceRecognition()
+        }
+
+    }
+
+    // Add this new method for voice recognition
+    private fun startVoiceRecognition() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_PROMPT, "Say product name to search")
+        }
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_VOICE_SEARCH)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Voice recognition not available", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Add this method to handle the voice result
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_VOICE_SEARCH && resultCode == RESULT_OK) {
+            val matches = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (!matches.isNullOrEmpty()) {
+                val spokenText = matches[0]
+                toolbar.setSearchQuery(spokenText)
+                currentQuery = spokenText
+                loadProducts(reset = true)
+            }
         }
     }
 
@@ -141,7 +194,7 @@ class ProductListActivity : AppCompatActivity() {
 
             isLoading = false
             loadingProgressBar.visibility = View.GONE
-        }, 500)
+        }, 100)
     }
 
     private fun generateFakeProducts(page: Int, pageSize: Int): List<Product> {
