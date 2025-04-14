@@ -20,16 +20,26 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".search_pagination_2.activity.SearchActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".search_pagination.activity.ProductListActivity"
             android:exported="false" />
         <activity
             android:name=".search_pagination.activity.BeforeProductListActivity"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <meta-data
@@ -97,18 +107,20 @@
             android:exported="true">
 
             <!-- Deep Link -->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-<!--                <data-->
-<!--                    android:host="papayacoders.in"-->
-<!--                    android:scheme="https" />-->
-<!--            </intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+
+
+            <!-- <data -->
+            <!-- android:host="papayacoders.in" -->
+            <!-- android:scheme="https" /> -->
+            <!-- </intent-filter> -->
         </activity> <!-- Services -->
         <service
             android:name=".push_notifications.service.MyFirebaseMessagingService"
