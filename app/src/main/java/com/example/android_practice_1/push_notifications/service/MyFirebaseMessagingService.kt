@@ -12,18 +12,31 @@ import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+//    override fun onMessageReceived(message: RemoteMessage) {
+//        super.onMessageReceived(message)
+//        Log.d("check_FCM_response","FCM response")
+//        Log.d("check_msg","${message}")
+//        Log.d("check_data","${message.data}")
+//        Log.d("check_notification","${message.notification}")
+//        getFirebaseMessage(message.notification?.title, message.notification?.body)
+//    }
+
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        Log.d("check_FCM_response","FCM response")
-        Log.d("check_msg","${message}")
-        Log.d("check_data","${message.data}")
-        Log.d("check_notification","${message.notification}")
-        getFirebaseMessage(message.notification?.title, message.notification?.body)
+
+        Log.d("check_FCM_response", "FCM response")
+        Log.d("check_msg", "$message")
+        Log.d("check_data", "${message.data}")
+        var title = "title"
+        var body = "body of notification"
+
+        getFirebaseMessage(title, body)
     }
+
 
     private fun getFirebaseMessage(title: String?, body: String?) {
         val builder = NotificationCompat.Builder(this,"firebase_channel")
-            .setSmallIcon(R.drawable.notification_active)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
