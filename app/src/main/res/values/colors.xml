@@ -2,6 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#787474</color>
     <color name="liteblue">#2196F3</color>
     <color name="colorPrimary">#2196F3</color>
+
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+
+    <!-- Parent category colors -->
+    <color name="parent_category_bg">#F5F5F5</color>
+    <color name="parent_category_text">#212121</color>
+
+    <!-- Child category colors (level 1) -->
+    <color name="child_category_bg_1">#FFFFFF</color>
+    <color name="child_category_text">#424242</color>
+
+    <!-- Child category colors (level 2+) -->
+    <color name="child_category_bg_2">#FAFAFA</color>
+    <color name="child_category_text_2">#616161</color>
 </resources>

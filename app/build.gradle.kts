@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "com.example.android_practice_1"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.android_practice_1"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -107,5 +107,10 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Jackson dependencies
+    implementation("com.fasterxml.jackson.core:jackson-core:2.13.0")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
 
 }

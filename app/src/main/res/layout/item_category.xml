@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable name="data" type="com.example.android_practice_1.nested_menu.model.Category"/>
+        <variable name="hasChildren" type="Boolean"/>
+        <variable name="level" type="Integer"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Main Category Item -->
+        <LinearLayout
+            android:id="@+id/itemCatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/navDrawerCategoryLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{data.name}"
+                android:textSize="@{level == 0 ? 16 : 14}"
+                tools:text="Category Name"/>
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="@{hasChildren ? View.VISIBLE : View.GONE}"
+                app:srcCompat="@drawable/ic_arrow_back_24"
+                android:rotation="@{data.isExpanded ? 180 : 0}"/>
+        </LinearLayout>
+
+        <!-- Space for subcategories will be added programmatically -->
+    </LinearLayout>
+</layout>

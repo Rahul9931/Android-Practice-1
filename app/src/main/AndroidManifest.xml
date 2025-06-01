@@ -27,7 +27,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".device_storage.MainActivity"
+            android:name=".nested_menu.activity.NestedActivity"
             android:exported="true">
 
             <intent-filter>
@@ -37,10 +37,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".search_pagination_2.activity.SearchActivity"
+            android:name=".device_storage.MainActivity"
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".search_pagination_2.activity.SearchActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".search_pagination.activity.ProductListActivity"
             android:exported="false" />
